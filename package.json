@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "formik": "^2.2.9",
     "gh-pages": "^3.2.3",
     "react": "^17.0.2",
@@ -31,7 +32,7 @@
     "lint:js": "eslint src/**/*.{js,jsx}",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-	 "backend": "json-server --watch db.json --port 3004"
+    "backend": "json-server --watch db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [

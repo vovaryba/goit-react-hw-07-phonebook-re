@@ -1,28 +1,41 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import phonebookActions from 'redux/phonebook/phonebook-actions';
-import { getFilteredContacts } from 'redux/phonebook/phonebook-selectors';
+import { phonebookSelectors, phonebookOperations } from 'redux/phonebook';
 import s from './List.module.css';
 
 const List = () => {
-  const contacts = useSelector(getFilteredContacts);
+  const contacts = useSelector(phonebookSelectors.getFilteredContacts);
+  const isLoading = useSelector(phonebookSelectors.getIsLoading);
+  const error = useSelector(phonebookSelectors.getError);
+
   const dispatch = useDispatch();
 
-  const onDeleteContact = id => dispatch(phonebookActions.deleteContact(id));
+  useEffect(() => {
+    dispatch(phonebookOperations.fetchContacts());
+  }, [dispatch]);
+
+  const onDeleteContact = id => dispatch(phonebookOperations.deleteContact(id));
 
   return (
-    <ul>
-      {contacts.map(contact => (
-        <li key={contact.id}>
-          {contact.name}: {contact.number}
-          <button
-            className={s.button}
-            onClick={() => onDeleteContact(contact.id)}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {error && <h2>{error}</h2>}
+      {isLoading && <h2>Loading...</h2>}
+      {contacts.length > 0 && !isLoading && (
+        <ul>
+          {contacts.map(contact => (
+            <li key={contact.id}>
+              {contact.name}: {contact.number}
+              <button
+                className={s.button}
+                onClick={() => onDeleteContact(contact.id)}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 

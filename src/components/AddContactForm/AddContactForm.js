@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import phonebookActions from 'redux/phonebook/phonebook-actions';
-import { getContacts } from 'redux/phonebook/phonebook-selectors';
+import { phonebookSelectors, phonebookOperations } from 'redux/phonebook';
 import s from './AddContactForm.module.css';
 
 const AddContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(phonebookSelectors.getContacts);
   const dispatch = useDispatch();
 
   const {
@@ -33,7 +32,7 @@ const AddContactForm = () => {
       return;
     }
 
-    dispatch(phonebookActions.addContact({ name, number }));
+    dispatch(phonebookOperations.addContact({ name, number }));
 
     reset();
   };

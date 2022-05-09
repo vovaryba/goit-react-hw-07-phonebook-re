@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import phonebookActions from 'redux/phonebook/phonebook-actions';
-import { getFilter } from 'redux/phonebook/phonebook-selectors';
+import { phonebookActions, phonebookSelectors } from 'redux/phonebook';
 import s from './Filter.module.css';
 
 const Filter = () => {
-  const value = useSelector(getFilter);
+  const value = useSelector(phonebookSelectors.getFilter);
   const dispatch = useDispatch();
 
   const onChange = e => dispatch(phonebookActions.changeFilter(e.target.value));
